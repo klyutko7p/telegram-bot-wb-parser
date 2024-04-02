@@ -15,6 +15,7 @@ options.headless = True
 # Инициализация драйвера Selenium для Chrome с использованием опций
 driver = webdriver.Chrome(options=options)
 
+
 # Функция для открытия браузера и выполнения процедуры
 def open_browser_and_process(url):
     # Открытие веб-страницы
@@ -35,13 +36,17 @@ def open_browser_and_process(url):
     # Возвращаем извлеченный текст
     return text
 
+
 # Инициализация бота
 bot = TeleBot('7185448364:AAFKMQUW1Z6_oJcOYnK8MxTbSLES-yiDlK0')
+
 
 # Обработчик команды '/start'
 @bot.message_handler(commands=['start'])
 def handle_start(message):
-    bot.send_message(message.chat.id, "Привет! Отправь мне сообщение с текстом '/get_price [ссылка]', чтобы получить цену товара.")
+    bot.send_message(message.chat.id,
+                     "Привет! Отправь мне сообщение с текстом '/get_price [ссылка]', чтобы получить цену товара.")
+
 
 # Обработчик команды '/get_price'
 @bot.message_handler(commands=['get_price'])
@@ -60,12 +65,15 @@ def handle_get_price(message):
         else:
             bot.send_message(message.chat.id, "Не удалось получить цену товара.")
     else:
-        bot.send_message(message.chat.id, "Не найдена ссылка на товар. Пожалуйста, отправьте ссылку в формате: /get_price [ссылка]")
+        bot.send_message(message.chat.id,
+                         "Не найдена ссылка на товар. Пожалуйста, отправьте ссылку в формате: /get_price [ссылка]")
+
 
 # Обработчик ошибочных команд
 @bot.message_handler(func=lambda message: True)
 def handle_invalid(message):
     bot.reply_to(message, "Неизвестная команда. Используйте '/start' для начала.")
+
 
 # Запуск бота
 bot.polling()
